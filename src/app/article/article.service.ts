@@ -12,6 +12,11 @@ export class ArticleService {
 
   constructor(private http: Http, private socketIOService: SocketIOService) { }
 
+  // /articles/users/591414eaf6baaa010068e8d4/suggestions
+  getRecommendedArticles(userId): Promise<Article[]> {
+    console.log(this.apiUrl + 'articles/users/' + userId + '/suggestions');
+    return this.http.get(this.apiUrl + 'articles/users/' + userId + '/suggestions').toPromise().then(res => res.json()).catch(this.handleError);
+  }
   // get articles of selected category
   getArticles(name: string): Promise<Article[]> {
     let articleUrl: string;
@@ -20,7 +25,6 @@ export class ArticleService {
     } else {
       articleUrl = this.apiUrl + 'categories/' + name + '/articles';
     }
-    console.log(articleUrl);
     return this.http.get(articleUrl)
       .toPromise()
       .then(response => response.json())
@@ -73,7 +77,6 @@ export class ArticleService {
     let body = JSON.stringify(comment);
     let header = new Headers({ 'Content-Type': 'application/json' });
     return this.http.post(this.apiUrl + 'articles' + '/' + id + '/comments', body, { headers: header }).toPromise().then(response => {
-      console.log(response.status);
     }).catch(this.handleError);
   }
 

@@ -28,7 +28,6 @@ export class ModifyCommentDialogComponent implements OnInit {
   }
 
   onSubmit(comment: Comment) {
-    console.log(comment)
     this.articleService.putComment(this.data.articleId, comment).then(response => {
       this.dialogRef.close('yes')
     });

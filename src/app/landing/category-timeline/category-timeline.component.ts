@@ -22,7 +22,6 @@ export class CategoryTimelineComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    console.log(this.type);
     this.ref.detectChanges();
     if (this.type == 'latest') {
       this.orderField = 'date';

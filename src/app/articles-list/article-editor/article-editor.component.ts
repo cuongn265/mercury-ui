@@ -9,7 +9,7 @@ import { CategoryService } from "../../category.service";
 import { MdDialogRef } from "@angular/material";
 import { ActivatedRoute } from '@angular/router';
 import { MdSnackBar } from '@angular/material';
-import {ImageCropperComponent, CropperSettings, CropperDrawSettings, Bounds} from 'ng2-img-cropper';
+import { ImageCropperComponent, CropperSettings, CropperDrawSettings, Bounds } from 'ng2-img-cropper';
 import * as AWS from 'aws-sdk';
 import { AuthService } from "../../auth.service";
 
@@ -48,28 +48,26 @@ export class ArticleEditorComponent implements OnInit {
     private route: ActivatedRoute,
     private auth: AuthService,
     private snackBar: MdSnackBar) {
-      this.cropperSettings = new CropperSettings();
-      this.cropperSettings.noFileInput = true;
-      this.cropperSettings.width = 1600;
-      this.cropperSettings.height = 900;
-      this.cropperSettings.croppedWidth =1600;
-      this.cropperSettings.croppedHeight = 900;
-      this.cropperSettings.preserveSize = true;
-      this.cropperSettings.dynamicSizing = true;
-      this.cropperSettings.cropperClass = 'myCropper';
-      this.cropperSettings.croppingClass = 'myCropping';
+    this.cropperSettings = new CropperSettings();
+    this.cropperSettings.noFileInput = true;
+    this.cropperSettings.width = 1600;
+    this.cropperSettings.height = 900;
+    this.cropperSettings.croppedWidth = 1600;
+    this.cropperSettings.croppedHeight = 900;
+    this.cropperSettings.preserveSize = true;
+    this.cropperSettings.dynamicSizing = true;
+    this.cropperSettings.cropperClass = 'myCropper';
+    this.cropperSettings.croppingClass = 'myCropping';
 
-      this.cropperSettings.cropperDrawSettings = new CropperDrawSettings();
-      this.cropperSettings.cropperDrawSettings.strokeColor = '#fdfdfd';
-      this.cropperSettings.cropperDrawSettings.strokeWidth = 1;
-      this.data = {};
+    this.cropperSettings.cropperDrawSettings = new CropperDrawSettings();
+    this.cropperSettings.cropperDrawSettings.strokeColor = '#fdfdfd';
+    this.cropperSettings.cropperDrawSettings.strokeWidth = 1;
+    this.data = {};
     articleService.getTags().then((tags) => {
       this.articleTags = tags;
-      console.log(this.articleTags);
       for (let tag of tags) {
         this.autocompleteTags.push(tag.name);
       }
-      //console.log(this.articlesTags);
     });
     this.data = {};
   }
@@ -88,7 +86,6 @@ export class ArticleEditorComponent implements OnInit {
   }
 
   cropped(bounds: Bounds, article: any) {
-    console.log('on cropped');
 
   }
 
@@ -114,10 +111,7 @@ export class ArticleEditorComponent implements OnInit {
     let self = this;
     s3Bucket.putObject(xdata, function (err, data) {
       if (err) {
-        console.log(err);
-        console.log('Error uploading data: ', data);
       } else {
-        console.log('succesfully uploaded the image!');
         self.articleDetail.header_image = 'https://s3-ap-southeast-1.amazonaws.com/cuongngo-news/' + _id
         self.isLoading = false;
       }
@@ -131,8 +125,6 @@ export class ArticleEditorComponent implements OnInit {
       if (params['id']) {
         this.articleService.getArticleDetail(params['id']).then(res => {
           this.articleDetail = res;
-          console.log('Article Detail');
-          console.log(this.articleDetail);
           this.data.image = res.header_image;
           var image: any = new Image();
           image.src = res.header_image;
@@ -170,12 +162,10 @@ export class ArticleEditorComponent implements OnInit {
       }
       article.tags = this.submittedTags;
     }
-    console.log('you submitted value:', article);
 
 
     if (article._id === undefined) {
       this.articleService.postArticle(article).then((res) => {
-        console.log('Article submitted to server !');
         this.openSnackBar('Article is created successfully', null);
         this.onCancel();
       }).catch(res => {
