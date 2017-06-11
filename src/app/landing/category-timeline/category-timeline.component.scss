@@ -27,7 +27,7 @@ $min-width: 140px;
 
   .article-container {
     border-left: 2px solid #dfdfdf;
-    padding-left: 30px;
+    padding-left: 50px;
     .article {
       width: 100%;
     }
@@ -66,11 +66,13 @@ $min-width: 140px;
     }
     .time {
       position: absolute;
-      left: -70px;
+      left: -95px;
       top: 20px;
       background: #dfdfdf;
       padding: 5px;
       border-radius: 20px;
+      min-width: 90px;
+      text-align: center;
     }
 
     .view-count {
@@ -91,6 +93,10 @@ $min-width: 140px;
     font-weight: bold;
     line-height: 1.2;
     color: #000000;
+    z-index: 1;
+    &:hover {
+      color: mat-color($primary);
+    }
   }
 
   img.mat-card-md-image {

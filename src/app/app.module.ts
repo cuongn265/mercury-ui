@@ -53,6 +53,8 @@ import { CategoryTimelineComponent } from './landing/category-timeline/category-
 import {MomentModule} from 'angular2-moment';
 import {ScrollToModule} from 'ng2-scroll-to';
 import {Ng2PageScrollModule} from 'ng2-page-scroll';
+import { BookmarkComponent } from './bookmark/bookmark.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -78,6 +80,7 @@ import {Ng2PageScrollModule} from 'ng2-page-scroll';
     SwiperComponent,
     LandingComponent,
     CategoryTimelineComponent,
+    BookmarkComponent,
   ],
   imports: [
     BrowserModule,
@@ -106,7 +109,8 @@ import {Ng2PageScrollModule} from 'ng2-page-scroll';
     MomentModule,
     ShareButtonsModule.forRoot(),
     ScrollToModule.forRoot(),
-    Ng2PageScrollModule.forRoot()
+    Ng2PageScrollModule.forRoot(),
+    FlexLayoutModule
   ],
   providers: [AuthGuard, AuthService, SocketIOService, LocalStorageService],
   bootstrap: [AppComponent],

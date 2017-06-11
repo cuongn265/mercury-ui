@@ -4,6 +4,7 @@ import { User } from './../user/user';
 import { Category } from './../category';
 import { Component, OnInit, HostListener } from '@angular/core';
 import { ArticleService } from "../article/article.service";
+import { Article } from "../article/article";
 
 @Component({
   selector: 'app-landing',
@@ -40,6 +41,7 @@ export class LandingComponent implements OnInit {
   activeTab: string = 'latest';
   inactiveTab: string = 'popular';
   totalComments: number;
+  recommendedArticles: Article[];
 
   constructor(private categoryService: CategoryService, private auth: AuthService, private articleServce: ArticleService) { }
 
@@ -65,6 +67,12 @@ export class LandingComponent implements OnInit {
         }
       }
     );
+    if (this.auth.authenticated()) {
+      this.articleServce.getRecommendedArticles(this.auth.userProfile.identities[0].user_id).then(res => {
+        this.recommendedArticles = res;
+        console.log(this.recommendedArticles);
+      });
+    }
   }
 
   checkProfile() {
@@ -85,33 +93,11 @@ export class LandingComponent implements OnInit {
     this.articleServce.getComments(articleId).then(res => this.totalComments = res.length);
   }
 
-  lastScrollTop = 0;
-
-  @HostListener('window:scroll', ['$event']) onScrollEvent($event) {
-    // let p = $('.latest-news-area').offset().top - $(window).height() * 0.1;
-    // let pos = document.body.scrollTop;
-    // if (pos == 0) {
-    //   $('html, body').animate({
-    //     scrollTop: p
-    //   }, 1000);
-    // }
-    // var st = $('body').scrollTop();
-    
-    // if (st > this.lastScrollTop) {
-    //   console.log('down')
-    //   console.log(pos); 
-    //   console.log(p);
-    //   if (pos < p) {
-    //     console.log('animate is trigger')
-    //     $('html, body').animate({
-    //       scrollTop: p
-    //     }, 1000);
-    //   } else {
-    //     console.log('pos is greater than p')
-    //   }
-    // } else {
-    //   console.log('up')
-    // }
-    // this.lastScrollTop = st;
+  getCategoryName(categoryId) {
+    for (let category of this.categoryList) {
+      if (category._id == categoryId) {
+        return category.name.toLowerCase();
+      }
+    }
   }
 }

@@ -35,6 +35,32 @@
   </swiper>
   <div class="latest-news-area">
     <md-tab-group md-stretch-tabs>
+      <md-tab label="Recommended" *ngIf="auth.authenticated() && auth.userProfile">
+        <div fxLayout='row wrap' *ngIf="recommendedArticles">
+          <div fxFlex fxFlex="33" fxFlex.sm="50" style="padding: 20px;" *ngFor="let recommended of recommendedArticles">
+            <md-card class="recommended-card" style="height: 100%; position: relative;">
+              <md-card-header>
+                <div md-card-avatar class="author-image">
+                  <img [src]="recommended.article.author ? 'https://cdn.auth0.com/avatars/' + recommended.article.author[0].toLowerCase() + '.png' : 'https://cdn.auth0.com/avatars/m.png'" alt="avatar" style="width: 100%; border-radius: 50%;">
+                </div>
+                <md-card-title md-line>{{recommended.article.title}}</md-card-title>
+                <md-card-subtitle md-line>{{recommended.article.author}}</md-card-subtitle>
+              </md-card-header>
+              <img md-card-image [src]="recommended.article.header_image ? recommended.article.header_image : 'http://www.bluthemes.com/assets/img/blog/12/balloon.jpg'">
+              <md-card-content style="margin-bottom: 50px;">
+                <p>
+                  {{recommended.article.description}}
+                </p>
+              </md-card-content>
+              <md-card-actions style="position: absolute; bottom: 24px; left: 0; right: 0; margin: auto;">
+                <button md-button color="primary" [routerLink]="['/news', getCategoryName(recommended.article.category), recommended.article._id]" style="margin-left: 16px;">READ MORE</button>
+                <button md-icon-button class="pull-right" shareButton="twitter" style="margin-right: 16px;"><md-icon>share</md-icon></button>
+                <button md-icon-button class="pull-right"><md-icon>favorite_border</md-icon></button>
+              </md-card-actions>
+            </md-card>
+          </div>
+        </div>
+      </md-tab>
       <md-tab label="Lastest">
         <div *ngFor="let category of categoryList" class="category-timeline-container">
           <app-category-timeline [category]="category" [type]="latest"></app-category-timeline>

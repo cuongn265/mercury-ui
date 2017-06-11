@@ -39,7 +39,6 @@ export class ArticlesListComponent implements OnInit {
     this.articlesService.getArticles('').then(
       (response) => {
         this.articlesList = response;
-        console.log(this.articlesList);
       }
     );
   }
@@ -53,29 +52,23 @@ export class ArticlesListComponent implements OnInit {
         self.articlesService.getArticles('').then(
           (response) => {
             self.articlesList = response;
-            console.log(self.articlesList);
           }
         );
       }, 1);
   }
 
   onOpenConfirmDialog(article: Article) {
-    console.log(article)
     let dialogRef = this.dialog.open(ConfirmDialogComponent);
     dialogRef.afterClosed().subscribe((result) => {
       if (result == 'Yes') {
-        console.log(article);
         this.onDelete(article);
       }
     })
   }
 
   onDelete(article: Article) {
-    console.log('on delete');
-    console.log(article);
     this.articlesService.deleteArticle(article._id)
       .then((res) => {
-        console.log(res);
         let self = this;
         this.refresh(self);
         this.openSnackBar('Article is deleted successfully', null);
