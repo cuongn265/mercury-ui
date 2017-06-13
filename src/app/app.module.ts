@@ -55,6 +55,7 @@ import {ScrollToModule} from 'ng2-scroll-to';
 import {Ng2PageScrollModule} from 'ng2-page-scroll';
 import { BookmarkComponent } from './bookmark/bookmark.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { LazyLoadImageModule } from 'ng-lazyload-image';
 
 @NgModule({
   declarations: [
@@ -110,7 +111,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     ShareButtonsModule.forRoot(),
     ScrollToModule.forRoot(),
     Ng2PageScrollModule.forRoot(),
-    FlexLayoutModule
+    FlexLayoutModule,
+    LazyLoadImageModule
   ],
   providers: [AuthGuard, AuthService, SocketIOService, LocalStorageService],
   bootstrap: [AppComponent],

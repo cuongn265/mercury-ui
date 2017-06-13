@@ -25,15 +25,14 @@ export class LandingComponent implements OnInit {
     'https://i.ytimg.com/vi/ROlYuWRGP0w/maxresdefault.jpg',
     'https://mir-s3-cdn-cf.behance.net/project_modules/fs/537d9047268173.587553663b674.png',
     'http://www.gettingsmart.com/wp-content/uploads/2015/07/theory-vector-482x335.jpg'
-
   ];
+
   config: Object = {
     pagination: '.swiper-pagination',
     paginationClickable: true,
     autoplay: 5000
   };
-  //http://www.gettingsmart.com/wp-content/uploads/2015/07/theory-vector-482x335.jpg
-  //https://www.colourbox.com/preview/11546518-creative-science-flat-concept.jpg
+
   categoryPage: any;
   comingSoonCategoryLength: any;
   comingSoonCategory: any;
@@ -42,7 +41,8 @@ export class LandingComponent implements OnInit {
   inactiveTab: string = 'popular';
   totalComments: number;
   recommendedArticles: Article[];
-
+  defaultImage = 'assets/images/loading.gif';
+  
   constructor(private categoryService: CategoryService, private auth: AuthService, private articleServce: ArticleService) { }
 
   ngOnInit() {
@@ -72,7 +72,7 @@ export class LandingComponent implements OnInit {
         this.recommendedArticles = res;
         console.log(this.recommendedArticles);
       });
-    }
+    };
   }
 
   checkProfile() {
