@@ -30,7 +30,9 @@ export class LandingComponent implements OnInit {
   config: Object = {
     pagination: '.swiper-pagination',
     paginationClickable: true,
-    autoplay: 5000
+    nextButton: '.swiper-button-next',
+    prevButton: '.swiper-button-prev',
+    // autoplay: 5000
   };
 
   categoryPage: any;
@@ -42,7 +44,7 @@ export class LandingComponent implements OnInit {
   totalComments: number;
   recommendedArticles: Article[];
   defaultImage = 'assets/images/loading.gif';
-  
+
   constructor(private categoryService: CategoryService, private auth: AuthService, private articleServce: ArticleService) { }
 
   ngOnInit() {
