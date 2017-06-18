@@ -5,18 +5,27 @@ import { UserService } from "./user.service";
 import { SocketIOService } from "../socket.io/socket-io.service";
 import { Category } from '../category';
 import { User } from './user';
-
+import { trigger,state,style,transition,animate,keyframes } from '@angular/animations';
 
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss'],
-  providers: [CategoryService, AuthService, UserService]
+  providers: [CategoryService, AuthService, UserService],
+  animations: [
+    trigger('visibilityChanged', [
+      state('show' , style({ display: 'block', opacity: 1, transform: 'scale(1.0)' })),
+      state('hide', style({ display: 'none', opacity: 0, transform: 'scale(0)' })),
+      transition('1 => 0', animate('300ms')),
+      transition('0 => 1', animate('300ms')),
+    ])
+  ]
 })
 export class UserComponent implements OnInit {
   categoryList: Category[];
   user: User;
+  isSearching: string = 'hide';
 
   private notifications: any[];
   private totalNotSeenNotifications: number = 0;
@@ -42,6 +51,7 @@ export class UserComponent implements OnInit {
         this.socketService.subscribeUser(userId);
       }
     }
+    console.log(this.isSearching);
   }
 
   checkProfile() {
@@ -79,5 +89,10 @@ export class UserComponent implements OnInit {
         this.userService.markNotificationAsRead(userId, notificationId);
       }
     }
+  }
+
+  onSearch() {
+    this.isSearching = (this.isSearching === 'show' ? 'hide' : 'show');
+    console.log(this.isSearching);
   }
 }

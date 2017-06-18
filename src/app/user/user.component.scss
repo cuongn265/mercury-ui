@@ -9,6 +9,14 @@
   font-family: 'Montserrat', 'Roboto', sans-serif
 }
 
+/deep/ .mat-input-ripple {
+  background-color: white !important; 
+}
+
+/deep/ .mat-input-underline {
+  border-color: white;
+}
+
 .user-card {
   background-color: white;
   .username-text {
