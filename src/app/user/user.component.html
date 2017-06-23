@@ -4,11 +4,12 @@
   </button>
   <span [routerLink]="['/news/home']" id="header-title" class="clickable"> Mercury </span>
   <span class="remaining-space"></span>
+  <button md-button  *ngFor="let category of categoryList" [routerLink]="['/news', category.name | lowercase]">{{category.name}}</button>
   <button md-icon-button class="menu-btn" (click)="onSearch()">
-    <md-icon class="md-24 personal-icon">search</md-icon>
+    <md-icon class="md-24 personal-icon">{{ isSearching == 'show' ? 'clear' : 'search'}}</md-icon>
   </button>
-  <md-input-container [@visibilityChanged]="isSearching">
-    <input type="text" mdInput>
+  <md-input-container [@visibilityChanged]="isSearching" style="width: 20%;">
+    <input type="text" style="font-size: 14px;" mdInput>
   </md-input-container >
 
   <md-autocomplete>
@@ -27,9 +28,6 @@
       <p class="time"> {{noti.date | amTimeAgo}} </p>
     </div>
   </md-menu>
-  <md-toolbar-row>
-    <button md-button  *ngFor="let category of categoryList" [routerLink]="['/news', category.name | lowercase]">{{category.name}}</button>
-  </md-toolbar-row>
 </md-toolbar>
 
 <md-sidenav-container style="height: 90vh; top: 10vh;">
