@@ -17,7 +17,6 @@ import { TagInputModule } from "ng2-tag-input";
 import { AppComponent } from './app.component';
 import { ArticleComponent } from './article/article.component';
 import { AppRoutes } from './app.routing';
-import { LoginComponent } from './login/login.component';
 import { ShareButtonsModule } from 'ngx-sharebuttons';
 import { ArticleDetailComponent } from './article-detail/article-detail.component';
 import { AdminComponent } from './admin/admin.component';
@@ -61,7 +60,6 @@ import { LazyLoadImageModule } from 'ng-lazyload-image';
     AppComponent,
     ArticleComponent,
     CollapseDirective,
-    LoginComponent,
     ArticleDetailComponent,
     AdminComponent,
     UserComponent,

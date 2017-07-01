@@ -65,12 +65,12 @@
       </md-tab>
       <md-tab label="Lastest">
         <div *ngFor="let category of categoryList" class="category-timeline-container">
-          <app-category-timeline [category]="category" [type]="latest"></app-category-timeline>
+          <app-category-timeline [category]="category" [articleType]="'latest'"></app-category-timeline>
         </div>
       </md-tab>
       <md-tab label="Popular">
         <div *ngFor="let category of categoryList" class="category-timeline-container">
-          <app-category-timeline [category]="category" [type]="popular"></app-category-timeline>
+          <app-category-timeline [category]="category" [articleType]="'popular'"></app-category-timeline>
         </div>
       </md-tab>
     </md-tab-group>

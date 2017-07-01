@@ -5,7 +5,6 @@ import { UserComponent } from './user/user.component';
 import { AdminComponent } from './admin/admin.component';
 import { Routes } from '@angular/router';
 import { ArticleComponent } from './article/article.component';
-import { LoginComponent } from './login/login.component';
 // import { AppComponent } from './app.component';
 import { ArticleDetailComponent } from './article-detail/article-detail.component';
 import { AuthGuard } from './auth-guard.service';
@@ -31,10 +30,6 @@ export const AppRoutes: Routes = [
       { path: ':categoryName', component: ArticleComponent, },
       { path: ':categoryName/:articleId', component: ArticleDetailComponent },
     ]
-  },
-  {
-    path: 'login',
-    component: LoginComponent,
   },
   {
     path: 'admin',
