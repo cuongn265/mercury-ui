@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Article } from './article';
 import { Comment } from '../comment';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import { SocketIOService } from "../socket.io/socket-io.service";
 import 'rxjs/add/operator/toPromise';
 
@@ -104,7 +104,6 @@ export class ArticleService {
         .toPromise().then(response => {
           this.socketIOService.pushNotificationToUsers(participantsId);
         }).catch(this.handleError);
-
     }
   }
 
@@ -122,6 +121,15 @@ export class ArticleService {
       url = this.apiUrl + 'categories/' + categoryId + '/articles/trending';
     }
     return this.http.get(url).toPromise().then(response => response.json()).catch(this.handleError);
+  }
+
+  getSearchedArticles(query: string): Promise<any> {
+    let url = this.apiUrl + "articles/search";
+    let requestOptions = new RequestOptions();
+    let params: URLSearchParams = new URLSearchParams();
+    params.set('q', query);
+    requestOptions.params = params;
+    return this.http.get(url, requestOptions).toPromise().then(response => response.json()).catch(this.handleError);
   }
 
   // Time Converting Methods ---------------------------- //

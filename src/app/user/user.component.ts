@@ -1,38 +1,60 @@
 import { AuthService } from './../auth.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CategoryService } from '../category.service';
 import { UserService } from "./user.service";
+import { ArticleService } from "../article/article.service";
+import { Article } from "../article/article";
 import { SocketIOService } from "../socket.io/socket-io.service";
 import { Category } from '../category';
 import { User } from './user';
 import { trigger,state,style,transition,animate,keyframes } from '@angular/animations';
-
+import { MdMenuTrigger } from '@angular/material'
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss'],
-  providers: [CategoryService, AuthService, UserService],
+  providers: [CategoryService, AuthService, UserService, ArticleService],
   animations: [
-    trigger('visibilityChanged', [
-      state('show' , style({ display: 'block', opacity: 1, transform: 'scale(1.0)' })),
-      state('hide', style({ display: 'none', opacity: 0, transform: 'scale(0)' })),
-      transition('1 => 0', animate('300ms')),
-      transition('0 => 1', animate('300ms')),
-    ])
-  ]
+  trigger(
+    'enterAnimation', [
+    transition(':enter', [
+      style({transform: 'translateX(100%)'}),
+      animate('500ms', style({transform: 'translateX(0)'}))
+      ]),
+    transition(':leave', [
+      style({transform: 'translateX(0)'}),
+      animate('500ms', style({transform: 'translateX(100%)'}))
+      ])
+    ]
+    ),
+  trigger(
+    'searchAnimation', [
+    transition(':enter', [
+      style({transform: 'scale(0)'}),
+      animate('200ms 500ms', style({transform: 'scale(1)'}))
+      ]),
+    transition(':leave', [
+      style({transform: 'scale(1)'}),
+      animate('0', style({transform: 'scale(0)'}))
+      ])
+    ]
+    )]
 })
 export class UserComponent implements OnInit {
   categoryList: Category[];
   user: User;
   isSearching: string = 'hide';
+  searchedArticles: Article[];
+  timeout = null;
 
   private notifications: any[];
   private totalNotSeenNotifications: number = 0;
 
-  constructor(private categoryService: CategoryService, private userService: UserService, private auth: AuthService, private socketService: SocketIOService) { }
+  constructor(private categoryService: CategoryService, private userService: UserService, private auth: AuthService, private socketService: SocketIOService, private articleService: ArticleService) { }
 
   ngOnInit() {
+    console.log(this.searchedArticles);
     this.socketService.initializeSocketInstance();
     this.socketService.listenToNotification().subscribe((notifications) => {
       this.notifications = notifications;
@@ -42,7 +64,7 @@ export class UserComponent implements OnInit {
       (response) => {
         this.categoryList = response;
       }
-    );
+      );
     if (this.auth.authenticated()) {
       if (this.checkProfile()) {
         let userId = this.user.identities[0].user_id;
@@ -51,7 +73,6 @@ export class UserComponent implements OnInit {
         this.socketService.subscribeUser(userId);
       }
     }
-    console.log(this.isSearching);
   }
 
   checkProfile() {
@@ -93,6 +114,12 @@ export class UserComponent implements OnInit {
 
   onSearch() {
     this.isSearching = (this.isSearching === 'show' ? 'hide' : 'show');
-    console.log(this.isSearching);
+  }
+
+  onSearching(event: any) {
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      this.articleService.getSearchedArticles(event.target.value).then((res) => {this.searchedArticles = res; console.log(this.searchedArticles.length)});
+    }, 500);
   }
 }
