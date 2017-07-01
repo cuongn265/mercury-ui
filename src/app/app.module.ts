@@ -17,7 +17,6 @@ import { TagInputModule } from "ng2-tag-input";
 import { AppComponent } from './app.component';
 import { ArticleComponent } from './article/article.component';
 import { AppRoutes } from './app.routing';
-import { LoginComponent } from './login/login.component';
 import { ShareButtonsModule } from 'ngx-sharebuttons';
 import { ArticleDetailComponent } from './article-detail/article-detail.component';
 import { AdminComponent } from './admin/admin.component';
@@ -35,7 +34,6 @@ import {
 } from 'primeng/primeng';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { CKEditorModule } from 'ng2-ckeditor';
-import { Slide2Component } from './slide-2/slide-2.component';
 import { ModifyCommentDialogComponent } from './comment-dialog/modify-comment-dialog/modify-comment-dialog.component';
 import { RemoveCommentDialogComponent } from './comment-dialog/remove-comment-dialog/remove-comment-dialog.component';
 import { Ng2PaginationModule} from 'ng2-pagination';
@@ -62,7 +60,6 @@ import { LazyLoadImageModule } from 'ng-lazyload-image';
     AppComponent,
     ArticleComponent,
     CollapseDirective,
-    LoginComponent,
     ArticleDetailComponent,
     AdminComponent,
     UserComponent,
@@ -72,7 +69,6 @@ import { LazyLoadImageModule } from 'ng-lazyload-image';
     ModifyCommentDialogComponent,
     RemoveCommentDialogComponent,
     DashboardComponent,
-    Slide2Component,
     ReversePipe,
     ArticleEditorComponent,
     ConfirmDialogComponent,

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Article } from './article';
 import { Comment } from '../comment';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import { SocketIOService } from "../socket.io/socket-io.service";
 import 'rxjs/add/operator/toPromise';
 
@@ -12,9 +12,7 @@ export class ArticleService {
 
   constructor(private http: Http, private socketIOService: SocketIOService) { }
 
-  // /articles/users/591414eaf6baaa010068e8d4/suggestions
   getRecommendedArticles(userId): Promise<Article[]> {
-    console.log(this.apiUrl + 'articles/users/' + userId + '/suggestions');
     return this.http.get(this.apiUrl + 'articles/users/' + userId + '/suggestions').toPromise().then(res => res.json()).catch(this.handleError);
   }
   // get articles of selected category
@@ -33,7 +31,6 @@ export class ArticleService {
 
   // get article detail by articleID
   getArticleDetail(id: string): Promise<Article> {
-
     if (id === undefined) {
       return null;
     } else {
@@ -107,7 +104,6 @@ export class ArticleService {
         .toPromise().then(response => {
           this.socketIOService.pushNotificationToUsers(participantsId);
         }).catch(this.handleError);
-
     }
   }
 
@@ -117,7 +113,24 @@ export class ArticleService {
   }
 
 
+  getTrendingLatestArticles(categoryId: string, isLatest: boolean): Promise<Article[]> {
+    let url = '';
+    if (isLatest == true) {
+      url = this.apiUrl + 'categories/' + categoryId + '/articles/latest';
+    } else {
+      url = this.apiUrl + 'categories/' + categoryId + '/articles/trending';
+    }
+    return this.http.get(url).toPromise().then(response => response.json()).catch(this.handleError);
+  }
 
+  getSearchedArticles(query: string): Promise<any> {
+    let url = this.apiUrl + "articles/search";
+    let requestOptions = new RequestOptions();
+    let params: URLSearchParams = new URLSearchParams();
+    params.set('q', query);
+    requestOptions.params = params;
+    return this.http.get(url, requestOptions).toPromise().then(response => response.json()).catch(this.handleError);
+  }
 
   // Time Converting Methods ---------------------------- //
   getTimeDistance(Post_TimeStamp: string): string {

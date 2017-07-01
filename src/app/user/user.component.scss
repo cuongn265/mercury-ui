@@ -9,6 +9,14 @@
   font-family: 'Montserrat', 'Roboto', sans-serif
 }
 
+/deep/ .mat-input-ripple {
+  background-color: white !important; 
+}
+
+/deep/ .mat-input-underline {
+  border-color: white;
+}
+
 .user-card {
   background-color: white;
   .username-text {
@@ -74,4 +82,22 @@
 md-toolbar /deep/ .mat-toolbar-layout {
   margin: auto;
   width: 100%;
+}
+
+.nav-category-section {
+  display: none !important;
+}
+
+.tb-category-section {
+  display: block !important;
+}
+
+@media only screen and (max-width: 960px) {
+  .nav-category-section {
+    display: block !important;
+  }
+
+  .tb-category-section {
+    display: none !important;
+  }
 }

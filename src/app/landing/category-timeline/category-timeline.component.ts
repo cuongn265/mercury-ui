@@ -9,26 +9,26 @@ import { Category } from '../../category';
   providers: [ArticleService]
 })
 export class CategoryTimelineComponent implements OnInit, OnChanges {
-  @Input() category: Category;
-  @Input() type: string;
+  @Input() articleType: any;
+  @Input() category: Category
   articles: Article[];
-  orderField = 'date';
-  isReverse = true;
 
   constructor(private articleService: ArticleService, private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.articleService.getArticles(this.category.name).then(res => this.articles = res);
+    if (this.articleType == "latest") {
+      this.articleService.getTrendingLatestArticles(this.category._id, true).then(res => this.articles = res);  
+    } else {
+      this.articleService.getTrendingLatestArticles(this.category._id, false).then(res => this.articles = res);
+    }
   }
 
   ngOnChanges() {
     this.ref.detectChanges();
-    if (this.type == 'latest') {
-      this.orderField = 'date';
-      this.isReverse = true;
+    if (this.articleType == 'latest') {
+      this.articleService.getTrendingLatestArticles(this.category._id, true).then(res => this.articles = res);  
     } else {
-      this.orderField = 'score';
-      this.isReverse = true;
+      this.articleService.getTrendingLatestArticles(this.category._id, false).then(res => this.articles = res);
     }
   }
 }

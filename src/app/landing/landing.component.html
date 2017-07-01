@@ -31,7 +31,9 @@
         </ng-template>
       </md-grid-list>
     </div>
-    <div class="swiper-pagination swiper-pagination-white"></div>
+    <!--<div class="swiper-pagination swiper-pagination-white"></div>-->
+    <div class="swiper-button-next swiper-button-white"></div>
+    <div class="swiper-button-prev swiper-button-white"></div>
   </swiper>
   <div class="latest-news-area">
     <md-tab-group md-stretch-tabs>
@@ -63,12 +65,12 @@
       </md-tab>
       <md-tab label="Lastest">
         <div *ngFor="let category of categoryList" class="category-timeline-container">
-          <app-category-timeline [category]="category" [type]="latest"></app-category-timeline>
+          <app-category-timeline [category]="category" [articleType]="'latest'"></app-category-timeline>
         </div>
       </md-tab>
       <md-tab label="Popular">
         <div *ngFor="let category of categoryList" class="category-timeline-container">
-          <app-category-timeline [category]="category" [type]="popular"></app-category-timeline>
+          <app-category-timeline [category]="category" [articleType]="'popular'"></app-category-timeline>
         </div>
       </md-tab>
     </md-tab-group>
