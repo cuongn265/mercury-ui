@@ -3,6 +3,7 @@
 @include mat-core(); // include all mixins
 .article-detail {
   header {
+    background-color: lightslategrey;
     padding: 0 !important;
     height: 60vh;
     background-size: cover;

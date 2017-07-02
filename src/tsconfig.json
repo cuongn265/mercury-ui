@@ -3,7 +3,7 @@
     "declaration": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "lib": ["es6", "dom", "es2015.promise"],
+    "lib": ["es6", "dom", "es2015.promise", "es2016"],
     "mapRoot": "./",
     "module": "es6",
     "moduleResolution": "node",
