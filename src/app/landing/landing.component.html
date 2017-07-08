@@ -37,6 +37,7 @@
   </swiper>
   <div class="latest-news-area">
     <md-tab-group md-stretch-tabs>
+      <
       <md-tab label="Recommended" *ngIf="auth.authenticated() && auth.userProfile">
         <div fxLayout='row wrap' *ngIf="recommendedArticles">
           <div fxFlex fxFlex="33" fxFlex.sm="50" style="padding: 20px;" *ngFor="let recommended of recommendedArticles">
@@ -63,6 +64,7 @@
           </div>
         </div>
       </md-tab>
+      
       <md-tab label="Lastest">
         <div *ngFor="let category of categoryList" class="category-timeline-container">
           <app-category-timeline [category]="category" [articleType]="'latest'"></app-category-timeline>

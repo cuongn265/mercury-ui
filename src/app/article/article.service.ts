@@ -42,23 +42,29 @@ export class ArticleService {
 
   postArticle(article: Article) {
     let body = JSON.stringify(article);
-    let header = new Headers({ 'Content-Type': 'application/json' });
-    return this.http.post(this.apiUrl + 'articles', body, { headers: header })
+    let userToken = localStorage.getItem('id_token');
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    headers.append('Authorization', userToken);
+    return this.http.post(this.apiUrl + 'articles', body, { headers: headers })
       .toPromise().then(response => response).catch(this.handleError);
   }
 
 
   putArticle(article: Article) {
     let body = JSON.stringify(article);
-    let header = new Headers({ 'Content-Type': 'application/json' });
-    return this.http.put(this.apiUrl + 'articles/' + article._id, body, { headers: header })
+    let userToken = localStorage.getItem('id_token');
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    headers.append('Authorization', userToken);
+    return this.http.put(this.apiUrl + 'articles/' + article._id, body, { headers: headers })
       .toPromise().then(response => response).catch(this.handleError);
   }
 
   deleteArticle(articleId: String) {
     let article = { '_id': articleId };
     let body = JSON.stringify(article);
+    let userToken = localStorage.getItem('id_token');
     let headers = new Headers({ 'Content-Type': 'application/json' });
+    headers.append('Authorization', userToken);
     return this.http.delete(this.apiUrl + 'articles/' + articleId, new RequestOptions({
       headers: headers,
       body: body

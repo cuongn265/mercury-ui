@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { Http } from '@angular/http';
+import { Http, RequestOptions, Headers } from '@angular/http';
 import { User } from './user';
 import { Comment } from '../comment';
 import { Observable } from "rxjs/Observable";
@@ -19,11 +19,16 @@ export class UserService {
     constructor(private http: Http, private socketService: SocketIOService) { }
 
     getUserAccounts(): Promise<User[]> {
-        return this.http.get(this.apiUrl + 'users').toPromise().then(response => response.json()).catch(this.handleError);
+        let userToken = localStorage.getItem('id_token');
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        headers.append('Authorization', userToken);
+        let options = new RequestOptions({ headers: headers });
+        return this.http.get(this.apiUrl + 'users', options).toPromise().then(response => response.json()).catch(this.handleError);
     }
 
     getUserAccount(userId: number): Promise<User> {
         return this.http.get(this.apiUrl + 'users/' + userId).toPromise().then(response => response.json()).catch(this.handleError);
+        
     }
 
     getUserProfileImage(userId: string): Promise<string> {
@@ -32,7 +37,12 @@ export class UserService {
 
     toggleStatus(userId: string) {
         let putUrl = this.apiUrl + 'users/' + userId + '/toggleStatus';
-        return this.http.put(putUrl, {}).toPromise().then(response => response).catch(this.handleError);
+        let userToken = localStorage.getItem('id_token');
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        headers.append('Authorization', userToken);
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.put(putUrl, {}, options).toPromise().then(response => response).catch(this.handleError);
     }
 
     unlockUser(userId: string) {

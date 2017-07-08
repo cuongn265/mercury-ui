@@ -23,8 +23,10 @@ export class SocketIOService {
 
     subscribeUser(userId: string) {
         let socket = this.socket;
+        let userToken = localStorage.getItem('id_token');
         let data = {
-            user_id: userId
+            user_id: userId,
+            token: userToken
         };
         // Emit socket
         socket.emit('loggedIn', data);
