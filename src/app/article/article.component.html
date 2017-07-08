@@ -31,7 +31,7 @@
     </div>
   </div>
   <!-- End here-->
-  <div fxLayout='row wrap' class="row-loading">
+  <div fxLayout='row wrap' class="row-loading" *ngIf="!isFinish" [hidden]="!isLoading">
     <div fxFlex fxFlex="33%" fxFlex.sm="50%" fxFlex.xs="100%" style="padding: 20px;">
       <md-card class="timeline-item">
         <div class="animated-background facebook">
@@ -43,10 +43,8 @@
           <div class="background-masker subheader-right"></div>
           <div class="background-masker subheader-bottom"></div>
           <div class="background-masker content-top"></div>
-          <div class="background-masker content-first-end"></div>
-          <div class="background-masker content-second-line"></div>
-          <div class="background-masker content-second-end"></div>
           <div class="background-masker content-third-line"></div>
+          <div class="background-masker content-third-end"></div>
           <div class="background-masker content-third-end"></div>
         </div>
       </md-card>
@@ -63,10 +61,8 @@
           <div class="background-masker subheader-right"></div>
           <div class="background-masker subheader-bottom"></div>
           <div class="background-masker content-top"></div>
-          <div class="background-masker content-first-end"></div>
-          <div class="background-masker content-second-line"></div>
-          <div class="background-masker content-second-end"></div>
           <div class="background-masker content-third-line"></div>
+          <div class="background-masker content-third-end"></div>
           <div class="background-masker content-third-end"></div>
         </div>
       </md-card>
@@ -83,10 +79,8 @@
           <div class="background-masker subheader-right"></div>
           <div class="background-masker subheader-bottom"></div>
           <div class="background-masker content-top"></div>
-          <div class="background-masker content-first-end"></div>
-          <div class="background-masker content-second-line"></div>
-          <div class="background-masker content-second-end"></div>
           <div class="background-masker content-third-line"></div>
+          <div class="background-masker content-third-end"></div>
           <div class="background-masker content-third-end"></div>
         </div>
       </md-card>
