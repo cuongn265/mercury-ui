@@ -28,10 +28,10 @@
     <p-column field="role" header="Role" [sortable]="true"></p-column>
     <p-column [style]="!stacked ? {'text-align':'center'} : {}" [sortable]="true">
         <template pTemplate="header">
-            Lock
+            Blocked
         </template>
         <template let-user="rowData" pTemplate="body">
-            <md-slide-toggle [checked]="!user.enable"
+            <md-slide-toggle [checked]="!user.enabled"
                             (change)="changeState($event, user)"
                             style="display: inline-block"
                             color="primary"

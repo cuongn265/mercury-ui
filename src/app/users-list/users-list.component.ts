@@ -32,11 +32,9 @@ export class UsersListComponent implements OnInit {
   }
 
   getUser() {
-    this.http.get(process.env.apiUrl + 'users')
-      .toPromise().then((response) => {
-        this.users = response.json();
-      }
-    );
+    this.userService.getUserAccounts().then((results) => {
+      this.users = results;
+    });
   }
 
   toggle() {
@@ -50,12 +48,11 @@ export class UsersListComponent implements OnInit {
     return true;
   }
 
-  refresh(self: any) {
+  refresh(self: this) {
     setTimeout(function () {
-      self.http.get(process.env.apiUrl + 'users')
-        .toPromise().then((response) => {
-          this.users = response.json();
-        }, 1);
+      self.userService.getUserAccounts().then((results) => {
+        self.users = results;
+      });
     });
   };
 }

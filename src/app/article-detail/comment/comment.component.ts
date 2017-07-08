@@ -36,6 +36,8 @@ export class CommentComponent implements OnInit {
   commentLimit = 10;
 
   commentText: string = "";
+
+  currentUserImagePath: string = "";
   private mentionParticipants: string[] = [];
   private mentionedParticipants: string[] = [];
 
@@ -50,6 +52,11 @@ export class CommentComponent implements OnInit {
 
   ngOnInit() {
     let user_id = this.authService.authenticated() ? this.authService.userProfile.identities[0].user_id : '';
+    if (user_id) {
+      this.userService.getUserProfileImage(user_id).then((imgPath) => {
+        this.currentUserImagePath = imgPath;
+      });
+    }
 
     this.comment = { _id: '', user_id: user_id, text: '', date: new Date() };
     this.sub = this.route.params.subscribe(params => {

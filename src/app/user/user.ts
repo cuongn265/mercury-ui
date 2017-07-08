@@ -7,7 +7,7 @@ export class User {
   public phone: string;
   public email: string;
   public role: string;
-  public enable: boolean;
+  public enabled: boolean;
   public identities: Array<{
     user_id: string,
     provider: string,
