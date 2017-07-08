@@ -1,5 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ArticleService } from './article.service';
+import { UserService } from '../user/user.service';
+import { AuthService } from '../auth.service';
 import { Article } from './article';
 import { Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -19,15 +21,17 @@ export class ArticleComponent implements OnInit, OnDestroy {
   publishedArticles: Article[] = [];
   array = [];
   infiniteArticles: Article[] = [];
-  sum = 6;
+  sum = 10;
   throttle = 400;
   scrollDistance = 0;
   articleIndex = 4;
   isLoading = false;
   isFinish = false;
   private sub: any;
+  isBookmark: boolean = false;
+  bookmarkedArticles: Article[] = [];
 
-  constructor(private articleService: ArticleService, private route: ActivatedRoute) {
+  constructor(private articleService: ArticleService, private route: ActivatedRoute, private userService: UserService, private authService: AuthService) {
   }
 
 
@@ -40,14 +44,12 @@ export class ArticleComponent implements OnInit, OnDestroy {
       this.infiniteArticles = [];
       this.articleService.getArticles(this.categoryName).then(
         (response) => {
-          console.log(response);
           this.articlesList = response;
           this.articlesList.forEach(article => {
             if (article.date) {
               this.publishedArticles.push(article);
             }
           }, this);
-          console.log(this.publishedArticles);
           this.addItems(4, this.sum);
         }
       );
@@ -73,14 +75,30 @@ export class ArticleComponent implements OnInit, OnDestroy {
     }
   }
   onScrollDown() {
-    console.log('scroll');
     this.sum += 6;
-    console.log(this.sum);
     this.isLoading = true;
     let self = this;
     setTimeout(function() {
       self.addItems(this.articleIndex, this.sum);
       self.isLoading = false;
     }, 1000);
+  }
+
+  toggleBookmark(articleId: string) {
+    let userId = this.authService.userProfile.identities[0].user_id;
+    this.userService.toggleBookmark(userId, articleId).then((res) => {
+      if (res.status == 202) {
+        this.checkBookmarked(userId, articleId);
+      }
+    });
+  }
+
+  checkBookmarked(userId: string, articleId: string) {
+    this.userService.getBookmarks(userId).then((res) => {
+      this.bookmarkedArticles = res;
+      let idList = [];
+      this.bookmarkedArticles.map((article) => idList.push(article._id));
+      this.isBookmark = idList.includes(articleId) ? true : false;
+    })
   }
 }
