@@ -64,7 +64,32 @@
           </div>
         </div>
       </md-tab>
-      
+      <md-tab label="Bookmark" *ngIf="auth.authenticated() && auth.userProfile">
+        <div fxLayout='row wrap' *ngIf="bookmarkedArticles">
+          <div fxFlex fxFlex="33" fxFlex.sm="50" style="padding: 20px;" *ngFor="let bookmarked of bookmarkedArticles">
+            <md-card class="bookmarked-card" style="height: 100%; position: relative;">
+              <md-card-header>
+                <div md-card-avatar class="author-image">
+                  <img [src]="bookmarked.author ? 'https://cdn.auth0.com/avatars/' + bookmarked.author[0].toLowerCase() + '.png' : 'https://cdn.auth0.com/avatars/m.png'" alt="avatar" style="width: 100%; border-radius: 50%;">
+                </div>
+                <md-card-title md-line>{{bookmarked.title}}</md-card-title>
+                <md-card-subtitle md-line>{{bookmarked.author}}</md-card-subtitle>
+              </md-card-header>
+              <img md-card-image [src]="bookmarked.header_image ? bookmarked.header_image : 'http://www.bluthemes.com/assets/img/blog/12/balloon.jpg'">
+              <md-card-content style="margin-bottom: 50px;">
+                <p>
+                  {{bookmarked.description}}
+                </p>
+              </md-card-content>
+              <md-card-actions style="position: absolute; bottom: 24px; left: 0; right: 0; margin: auto;">
+                <button md-button color="primary" [routerLink]="['/news', getCategoryName(bookmarked.category), bookmarked._id]" style="margin-left: 16px;">READ MORE</button>
+                <button md-icon-button class="pull-right" shareButton="twitter" style="margin-right: 16px;"><md-icon>share</md-icon></button>
+                <button md-icon-button class="pull-right" (click)="removeBookmark(bookmarked._id)"><md-icon>favorite_border</md-icon></button>
+              </md-card-actions>
+            </md-card>
+          </div>
+        </div>
+      </md-tab>
       <md-tab label="Lastest">
         <div *ngFor="let category of categoryList" class="category-timeline-container">
           <app-category-timeline [category]="category" [articleType]="'latest'"></app-category-timeline>

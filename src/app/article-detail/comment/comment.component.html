@@ -66,8 +66,12 @@
           <hr [hidden]="i == (commentLimit - 1)" class="comment-divider">
         </div>
       </div>
-      <div class="loadmore-container">
+      <div class="loadmore-container" *ngIf="comments.length >= 10 && commentLimit < comments.length">
         <button md-raised-button color="primary" (click)="loadMore()" class="btn-loadmore">Load more</button>
+      </div>
+
+      <div class="loadmore-container" *ngIf="comments.length >= 10 && commentLimit == comments.length">
+        <button md-raised-button color="primary" (click)="collapse()" class="btn-loadmore">Collapse</button>
       </div>
     </md-list>
   </div>

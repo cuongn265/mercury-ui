@@ -194,4 +194,8 @@ export class CommentComponent implements OnInit {
       this.commentLimit = this.comments.length;
     }
   }
+
+  collapse() {
+    this.commentLimit = 10;
+  }
 }

@@ -1,4 +1,3 @@
-import { InfiniteScrollModule } from 'angular2-infinite-scroll';
 import { Ng2OrderModule } from 'ng2-order-pipe';
 import { UserComponent } from './user/user.component';
 import { BrowserModule } from '@angular/platform-browser';
@@ -54,6 +53,7 @@ import {Ng2PageScrollModule} from 'ng2-page-scroll';
 import { BookmarkComponent } from './bookmark/bookmark.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [
@@ -102,13 +102,13 @@ import { LazyLoadImageModule } from 'ng-lazyload-image';
     MentionModule,
     SwiperModule,
     Ng2OrderModule,
-    InfiniteScrollModule,
     MomentModule,
     ShareButtonsModule.forRoot(),
     ScrollToModule.forRoot(),
     Ng2PageScrollModule.forRoot(),
     FlexLayoutModule,
-    LazyLoadImageModule
+    LazyLoadImageModule,
+    InfiniteScrollModule
   ],
   providers: [AuthGuard, AuthService, SocketIOService, LocalStorageService],
   bootstrap: [AppComponent],

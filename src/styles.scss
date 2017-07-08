@@ -39,7 +39,11 @@ body {
     }
 
     md-sidenav-container /deep/ .mat-sidenav-content {
-      overflow-x: hidden;
+      overflow: visible;
+    }
+
+    md-sidenav-container {
+      overflow: visible !important;
     }
 
     .clickable {

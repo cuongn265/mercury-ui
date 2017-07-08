@@ -40,12 +40,14 @@ export class ArticleComponent implements OnInit, OnDestroy {
       this.infiniteArticles = [];
       this.articleService.getArticles(this.categoryName).then(
         (response) => {
+          console.log(response);
           this.articlesList = response;
           this.articlesList.forEach(article => {
             if (article.date) {
               this.publishedArticles.push(article);
             }
           }, this);
+          console.log(this.publishedArticles);
           this.addItems(4, this.sum);
         }
       );
@@ -71,10 +73,12 @@ export class ArticleComponent implements OnInit, OnDestroy {
     }
   }
   onScrollDown() {
+    console.log('scroll');
     this.sum += 6;
+    console.log(this.sum);
     this.isLoading = true;
     let self = this;
-    setTimeout(function () {
+    setTimeout(function() {
       self.addItems(this.articleIndex, this.sum);
       self.isLoading = false;
     }, 1000);
