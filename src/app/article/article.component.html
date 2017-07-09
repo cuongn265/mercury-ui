@@ -1,42 +1,38 @@
 <app-swiper></app-swiper>
 <div class="container articles-container" *ngIf="publishedArticles && publishedArticles.length > 0">
-  <div class="row">
-    <div class="heading-line col-md-12 col-sm-12">
-      <h4>top <b>stories</b></h4>
-      <div class="line"></div>
-    </div>
-  </div>
-
-  <div class="row search-results"
-      infinite-scroll
+  <div class="search-results" fxLayout='row wrap'
+      infiniteScroll
       debounce
       [infiniteScrollDistance]="scrollDistance"
       [infiniteScrollThrottle]="throttle"
       (scrolled)="onScrollDown()">
-    <div class="col-md-4 col-sm-6" *ngFor="let article of infiniteArticles">
-      <md-card>
-        <img md-card-image src={{article.header_image}} class="articles-img">
-        <md-card-content>
-          <div class="article-title-container">
-            <h4 class="article-title">{{article.title}}</h4>
+    <div fxFlex fxFlex="33%" fxFlex.sm="50%" fxFlex.xs="100%" style="padding: 20px;" *ngFor="let article of infiniteArticles">
+      <md-card class="article-card" style="height: 100%; position: relative;">
+        <md-card-header>
+          <div md-card-avatar class="author-image">
+            <img [src]="article.author ? 'https://cdn.auth0.com/avatars/' + article.author[0].toLowerCase() + '.png' : 'https://cdn.auth0.com/avatars/m.png'" alt="avatar" style="width: 100%; border-radius: 50%;">
           </div>
-          <div class="article-description-container">
-          <p class="article-description">
+          <md-card-title md-line>{{article.title}}</md-card-title>
+          <md-card-subtitle md-line>{{article.author || 'Mercury Crew'}}</md-card-subtitle>
+        </md-card-header>
+        <img md-card-image [src]="article.header_image ? article.header_image : 'http://www.bluthemes.com/assets/img/blog/12/balloon.jpg'">
+        <md-card-content style="margin-bottom: 50px;">
+          <p>
             {{article.description}}
           </p>
-          </div>
         </md-card-content>
-        <md-card-actions>
-          <button md-button color="primary" [routerLink]="[article._id]">
-            LEARN MORE</button>
+        <md-card-actions style="position: absolute; bottom: 24px; left: 0; right: 0; margin: auto;">
+          <button md-button color="primary" [routerLink]="[article._id]" style="margin-left: 16px;">READ MORE</button>
+          <button md-icon-button class="pull-right" shareButton="twitter" style="margin-right: 16px;"><md-icon>share</md-icon></button>
+          <button md-icon-button class="pull-right" (click)="toggleBookmark(article._id)"><md-icon>{{ isBookmark ? 'favorite' : 'favorite_border'}}</md-icon></button>
         </md-card-actions>
       </md-card>
       <div class="clearfix visible-sm-block"></div>
     </div>
   </div>
   <!-- End here-->
-  <div class="row row-loading" *ngIf="!isFinish" [hidden]="!isLoading">
-    <div class="col-md-4 col-sm-6">
+  <div fxLayout='row wrap' class="row-loading" *ngIf="!isFinish" [hidden]="!isLoading">
+    <div fxFlex fxFlex="33%" fxFlex.sm="50%" fxFlex.xs="100%" style="padding: 20px;">
       <md-card class="timeline-item">
         <div class="animated-background facebook">
           <div class="background-masker header-top"></div>
@@ -47,16 +43,14 @@
           <div class="background-masker subheader-right"></div>
           <div class="background-masker subheader-bottom"></div>
           <div class="background-masker content-top"></div>
-          <div class="background-masker content-first-end"></div>
-          <div class="background-masker content-second-line"></div>
-          <div class="background-masker content-second-end"></div>
           <div class="background-masker content-third-line"></div>
+          <div class="background-masker content-third-end"></div>
           <div class="background-masker content-third-end"></div>
         </div>
       </md-card>
       <div class="clearfix visible-sm-block"></div>
     </div>
-    <div class="col-md-4 col-sm-6">
+    <div fxFlex fxFlex="33%" fxFlex.sm="50%" fxFlex.xs="100%" style="padding: 20px;">
       <md-card class="timeline-item">
         <div class="animated-background facebook">
           <div class="background-masker header-top"></div>
@@ -67,16 +61,14 @@
           <div class="background-masker subheader-right"></div>
           <div class="background-masker subheader-bottom"></div>
           <div class="background-masker content-top"></div>
-          <div class="background-masker content-first-end"></div>
-          <div class="background-masker content-second-line"></div>
-          <div class="background-masker content-second-end"></div>
           <div class="background-masker content-third-line"></div>
+          <div class="background-masker content-third-end"></div>
           <div class="background-masker content-third-end"></div>
         </div>
       </md-card>
       <div class="clearfix visible-sm-block"></div>
     </div>
-    <div class="col-md-4 col-sm-6 dynamic-col">
+    <div fxFlex fxFlex="33%" fxFlex.sm="50%" fxFlex.xs="100%" style="padding: 20px;" class="col-md-4 col-sm-6 dynamic-col">
       <md-card class="timeline-item">
         <div class="animated-background facebook">
           <div class="background-masker header-top"></div>
@@ -87,10 +79,8 @@
           <div class="background-masker subheader-right"></div>
           <div class="background-masker subheader-bottom"></div>
           <div class="background-masker content-top"></div>
-          <div class="background-masker content-first-end"></div>
-          <div class="background-masker content-second-line"></div>
-          <div class="background-masker content-second-end"></div>
           <div class="background-masker content-third-line"></div>
+          <div class="background-masker content-third-end"></div>
           <div class="background-masker content-third-end"></div>
         </div>
       </md-card>

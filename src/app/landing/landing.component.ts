@@ -4,6 +4,7 @@ import { User } from './../user/user';
 import { Category } from './../category';
 import { Component, OnInit, HostListener } from '@angular/core';
 import { ArticleService } from "../article/article.service";
+import { UserService } from "../user/user.service";
 import { Article } from "../article/article";
 
 @Component({
@@ -19,12 +20,12 @@ export class LandingComponent implements OnInit {
   backgroundUrl = [
     'https://i.ytimg.com/vi/GyUrxhPs7iw/maxresdefault.jpg',
     'http://orig05.deviantart.net/54fe/f/2015/065/0/6/tressor_by_jandyaditya-d8kov0q.png',
-    'http://wasiladev.com/wp-content/uploads/2017/03/seo.png',
+    'https://cdn.shutterstock.com/shutterstock/videos/23892799/thumb/8.jpg',
     'https://www.sketchappsources.com/resources/source-image/Xbox-One-Pad-dembsky.png',
     'https://i.ytimg.com/vi/t5CotvyUmb8/maxresdefault.jpg',
     'https://i.ytimg.com/vi/ROlYuWRGP0w/maxresdefault.jpg',
     'https://mir-s3-cdn-cf.behance.net/project_modules/fs/537d9047268173.587553663b674.png',
-    'http://www.gettingsmart.com/wp-content/uploads/2015/07/theory-vector-482x335.jpg'
+    'https://designmodo.com/wp-content/uploads/2013/04/92.jpg'
   ];
 
   config: Object = {
@@ -43,9 +44,10 @@ export class LandingComponent implements OnInit {
   inactiveTab: string = 'popular';
   totalComments: number;
   recommendedArticles: Article[];
+  bookmarkedArticles: Article[];
   defaultImage = 'assets/images/loading.gif';
 
-  constructor(private categoryService: CategoryService, private auth: AuthService, private articleServce: ArticleService) { }
+  constructor(private categoryService: CategoryService, private auth: AuthService, private articleServce: ArticleService, private userService: UserService) { }
 
   ngOnInit() {
     this.comingSoonCategoryLength = 0;
@@ -70,10 +72,8 @@ export class LandingComponent implements OnInit {
       }
     );
     if (this.auth.authenticated()) {
-      this.articleServce.getRecommendedArticles(this.auth.userProfile.identities[0].user_id).then(res => {
-        this.recommendedArticles = res;
-        console.log(this.recommendedArticles);
-      });
+      this.articleServce.getRecommendedArticles(this.auth.userProfile.identities[0].user_id).then(res => this.recommendedArticles = res);
+      this.userService.getBookmarks(this.auth.userProfile.identities[0].user_id).then(res => this.bookmarkedArticles = res);
     };
   }
 
@@ -101,5 +101,13 @@ export class LandingComponent implements OnInit {
         return category.name.toLowerCase();
       }
     }
+  }
+
+  removeBookmark(articleId: string) {
+    this.userService.toggleBookmark(this.auth.userProfile.identities[0].user_id, articleId).then((res) => {
+      if (res.status == 202) {
+        this.userService.getBookmarks(this.auth.userProfile.identities[0].user_id).then(res => this.bookmarkedArticles = res);
+      }
+    })
   }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Article } from '../article/article';
 import { ArticleService } from '../article/article.service';
+import { UserService } from '../user/user.service';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { AuthService } from '../auth.service';
 import { User } from '../user/user';
@@ -36,6 +37,8 @@ export class ArticleDetailComponent implements OnInit {
   private newComment: Comment = new Comment();
   private submittingComment: boolean = false;
   private commentContent: Text;
+  private isBookmark: boolean = false;
+  private bookmarkedArticles: Article[] = [];
 
   @ViewChild(MdMenuTrigger) trigger: MdMenuTrigger;
   dialogModifyRef: MdDialogRef<ModifyCommentDialogComponent>;
@@ -47,16 +50,12 @@ export class ArticleDetailComponent implements OnInit {
     private authService: AuthService,
     private dialog: MdDialog,
     private socketService: SocketIOService,
-    private localStorageService: LocalStorageService
-
-  ) { }
+    private localStorageService: LocalStorageService,
+    private userService: UserService
+    ) { }
 
   ngOnInit() {
-    // get user profile from localStorage
     let userId = this.localStorageService.getUserId();
-
-
-
     this.sub = this.route.params.subscribe(params => {
       this.categoryName = params['categoryName'];
       this.articleId = params['articleId'];
@@ -74,13 +73,28 @@ export class ArticleDetailComponent implements OnInit {
         // this.commentList = this.article['comments'];
       });
 
-      this.articleService.getArticles(this.categoryName).then(
-        (response) => {
-          this.relatedArticleList = response;
-        }
-      );
+      this.articleService.getArticles(this.categoryName).then((response) => {this.relatedArticleList = response;});
     });
 
     this.shareUrl = window.location.href.toString();
+    this.checkBookmarked(userId);
+  }
+
+  toggleBookmark() {
+    let userId = this.authService.userProfile.identities[0].user_id;
+    this.userService.toggleBookmark(userId, this.articleId).then((res) => {
+      if (res.status == 202) {
+        this.checkBookmarked(userId);
+      }
+    });
+  }
+
+  checkBookmarked(userId: string) {
+    this.userService.getBookmarks(userId).then((res) => {
+      this.bookmarkedArticles = res;
+      let idList = [];
+      this.bookmarkedArticles.map((article) => idList.push(article._id));
+      this.isBookmark = idList.includes(this.articleId) ? true : false;
+    })
   }
 }

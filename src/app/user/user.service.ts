@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core'
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { User } from './user';
 import { Comment } from '../comment';
+import { Article } from '../article/article';
 import { Observable } from "rxjs/Observable";
 import { SocketIOService } from "../socket.io/socket-io.service";
 import 'rxjs/add/operator/toPromise';
@@ -60,6 +61,16 @@ export class UserService {
         this.http.put(putUrl, {}).toPromise().then(response => {
             this.socketService.markNotificationAsRead(userId);
         }).catch(this.handleError);
+    }
+    // '/:userId/articles/:articleId/toggleBookmark'
+    toggleBookmark(userId: string, articleId: string) {
+        let url = this.apiUrl + 'users/' + userId + '/articles/' + articleId + '/toggleBookmark';
+        return this.http.put(url, {}).toPromise().then(res => res).catch(this.handleError);
+    }
+
+    getBookmarks(userId: string): Promise<Article[]> {
+        let url = this.apiUrl + 'users/' + userId + '/articles/bookmarks';
+        return this.http.get(url).toPromise().then(res => res.json()).catch(this.handleError);
     }
 
     private handleError(error: any): Promise<any> {
