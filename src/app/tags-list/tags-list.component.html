@@ -1,0 +1,51 @@
+<div class="tags-list-container">
+  <button pButton type="button" (click)="toggle()"
+          style="margin-bottom:10px" label="Mobile"
+          icon="fa-desktop"
+          *ngIf="!stacked"
+          color="primary">
+  </button>
+  <button pButton type="button" (click)="toggle()"
+          style="margin-bottom:10px" label="Desktop"
+          icon="fa-mobile" *ngIf="stacked" color="primary">
+  </button>
+  <input #gb type="text" placeholder="Global search" pInputText style="margin-bottom:10px">
+  <button color="primary" class="btn-add-big-size" type="button" pButton icon="fa-plus" style="float:right" label="Add" (click)="showDialogToAdd()">
+  </button>
+
+  <p-dataTable
+        [value]="tagsList"
+        selectionMode="single"
+        [(selection)]="selectedTag"
+        (onRowSelect)="onRowSelect($event)"
+        [paginator]="true" rows="15"
+        [responsive]="true">
+      <p-column field="name" header="Name" [sortable]="true"></p-column>
+      <p-column field="description" header="Description" [sortable]="true"></p-column>
+      <p-footer class="hidden-sm hidden-md hidden-lg">
+        <div class="ui-helper-clearfix" style="width:100%">
+          <button type="button" pButton icon="fa-plus" style="float:left" (click)="showDialogToAdd()" label="Add"></button>
+        </div>
+      </p-footer>
+  </p-dataTable>
+
+
+  <p-dialog header="Tag Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" appendTo="body">
+      <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="tag">
+          <div class="ui-grid-row" style="margin-bottom: 10px; display: flex; align-items: center;">
+              <div class="ui-grid-col-4"><label for="name" style="margin-bottom: 0;">Name</label></div>
+              <div class="ui-grid-col-8"><input pInputText id="name" [(ngModel)]="tag.name"/></div>
+          </div>
+          <div class="ui-grid-row" style="margin-bottom: 10px; display: flex; align-items: center;">
+              <div class="ui-grid-col-4"><label for="name" style="margin-bottom: 0;">Description</label></div>
+              <div class="ui-grid-col-8"><input pInputText id="name" [(ngModel)]="tag.description"/></div>
+          </div>
+      </div>
+      <p-footer>
+          <div class="ui-dialog-buttonpane ui-helper-clearfix" style="border: none;">
+              <button type="button" pButton icon="fa-close" (click)="delete()" label="Delete"></button>
+              <button type="button" pButton icon="fa-check" (click)="save()" label="Save"></button>
+          </div>
+      </p-footer>
+  </p-dialog>
+</div>

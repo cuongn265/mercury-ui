@@ -126,7 +126,8 @@ $min-width: 140px;
 
 @media screen and (max-width: 800px) {
   .category-timeline {
-    padding-right: 100px;
+    padding-right: 50px;
+    padding-left: 100px ;
   }
   .category-container {
     padding-left: 0px;

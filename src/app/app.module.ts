@@ -54,6 +54,7 @@ import { BookmarkComponent } from './bookmark/bookmark.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { TagsListComponent } from './tags-list/tags-list.component';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     LandingComponent,
     CategoryTimelineComponent,
     BookmarkComponent,
+    TagsListComponent,
   ],
   imports: [
     BrowserModule,
