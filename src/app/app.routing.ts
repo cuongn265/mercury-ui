@@ -10,6 +10,7 @@ import { ArticleDetailComponent } from './article-detail/article-detail.componen
 import { AuthGuard } from './auth-guard.service';
 import { ArticleEditorComponent } from './articles-list/article-editor/article-editor.component';
 import { LandingComponent } from './landing/landing.component';
+import { TagsListComponent } from './tags-list/tags-list.component';
 
 export const AppRoutes: Routes = [
   {
@@ -38,6 +39,7 @@ export const AppRoutes: Routes = [
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent },
+      { path: 'tags-list', component: TagsListComponent },
       { path: 'users-list', component: UsersListComponent },
       { path: 'articles-list', component: ArticlesListComponent },
       { path: 'articles-list/new', component: ArticleEditorComponent },

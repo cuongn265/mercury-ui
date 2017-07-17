@@ -17,7 +17,7 @@
               [stacked]="stacked"
               [globalFilter]="gb"
               [(selection)]="selectedUser"
-              resizableColumns="true" 
+              resizableColumns="true"
               columnResizeMode="fit"
               #dt
               *ngIf="visible" >
@@ -25,7 +25,7 @@
     <p-column field="user_metadata.last_name" header="Last name" [sortable]="true"></p-column>
     <p-column field="email" header="Email" [sortable]="true"></p-column>
     <p-column field="user_metadata.phone" header="Phone" [sortable]="true"></p-column>
-    <p-column field="role" header="Role" [sortable]="true"></p-column>
+    <!-- <p-column field="role" header="Role" [sortable]="true"></p-column> -->
     <p-column [style]="!stacked ? {'text-align':'center'} : {}" [sortable]="true">
         <template pTemplate="header">
             Blocked
