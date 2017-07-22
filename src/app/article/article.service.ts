@@ -138,6 +138,14 @@ export class ArticleService {
     return this.http.get(url, requestOptions).toPromise().then(response => response.json()).catch(this.handleError);
   }
 
+  getAWSKey(): Promise<any> {
+    let url = this.apiUrl + "technical/keys/aws";
+    let userToken = localStorage.getItem('id_token');
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    headers.append('Authorization', userToken);
+    return this.http.get(url, {headers: headers}).toPromise().then(res => res.json()).catch(this.handleError);
+  }
+
   // Time Converting Methods ---------------------------- //
   getTimeDistance(Post_TimeStamp: string): string {
     // get current time - UTC format

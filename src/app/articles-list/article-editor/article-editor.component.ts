@@ -90,32 +90,40 @@ export class ArticleEditorComponent implements OnInit {
   }
 
   onApplyCrop(article: any) {
-    this.isLoading = true;
-    AWS.config.credentials = {
-      accessKeyId: process.env.accessKeyId,
-      secretAccessKey: process.env.secretAccessKey
-    }
-    let _id = (+new Date).toString().concat('_') + this.articleDetail.header_image_name;
+    let accessKeyId = '';
+    let secretAccessKey = '';
+    this.articleService.getAWSKey().then(res => {
+      console.log(res)
+      accessKeyId = res.aws_id;
+      secretAccessKey = res.aws_secret;
 
-    let s3Bucket = new AWS.S3({
-      params: { Bucket: 'cuongngo-news', Key: _id, ACL: 'public-read' },
-    })
-
-    let buf = new Buffer(article.image.replace(/^data:image\/\w+;base64,/, ""), 'base64')
-    let xdata: any = {
-      Key: _id,
-      Body: buf,
-      ContentEncoding: 'base64',
-      ContentType: 'image/jpeg'
-    };
-    let self = this;
-    s3Bucket.putObject(xdata, function (err, data) {
-      if (err) {
-      } else {
-        self.articleDetail.header_image = 'https://s3-ap-southeast-1.amazonaws.com/cuongngo-news/' + _id
-        self.isLoading = false;
+      this.isLoading = true;
+      AWS.config.credentials = {
+        accessKeyId: accessKeyId,
+        secretAccessKey: secretAccessKey
       }
-    });
+      let _id = (+new Date).toString().concat('_') + this.articleDetail.header_image_name;
+
+      let s3Bucket = new AWS.S3({
+        params: { Bucket: 'cuongngo-news', Key: _id, ACL: 'public-read' },
+      })
+
+      let buf = new Buffer(article.image.replace(/^data:image\/\w+;base64,/, ""), 'base64')
+      let xdata: any = {
+        Key: _id,
+        Body: buf,
+        ContentEncoding: 'base64',
+        ContentType: 'image/jpeg'
+      };
+      let self = this;
+      s3Bucket.putObject(xdata, function (err, data) {
+        if (err) {
+        } else {
+          self.articleDetail.header_image = 'https://s3-ap-southeast-1.amazonaws.com/cuongngo-news/' + _id
+          self.isLoading = false;
+        }
+      });
+    })
   }
 
   // TODO: Convert image from url to base 64
