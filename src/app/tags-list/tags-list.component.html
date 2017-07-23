@@ -19,7 +19,8 @@
         [(selection)]="selectedTag"
         (onRowSelect)="onRowSelect($event)"
         [paginator]="true" rows="15"
-        [responsive]="true">
+        [responsive]="true"
+        [globalFilter]="gb">
       <p-column field="name" header="Name" [sortable]="true"></p-column>
       <p-column field="description" header="Description" [sortable]="true"></p-column>
       <p-footer class="hidden-sm hidden-md hidden-lg">
