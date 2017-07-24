@@ -124,7 +124,17 @@ export class CommentComponent implements OnInit {
   onSubmit(comment: Comment) {
     /* Post comment */
     this.articleService.postComment(this.articleId, comment).then(res => {
-      this.articleService.getComments(this.articleId).then(res => this.comments = res.comments);
+      this.articleService.getComments(this.articleId).then(res => {
+        this.comments = res.comments;
+        this.articleService.getParticipants(this.articleId).then(res => {
+          this.participants = res;
+          for (let participant of this.participants) {
+            if (participant.user_id !== this.localStorageService.getUserId()) {
+              this.mentionParticipants.push(participant.username);
+            }
+          }
+        });
+      });
       this.comment.text = '';
 
 
