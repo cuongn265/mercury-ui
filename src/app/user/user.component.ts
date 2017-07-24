@@ -9,6 +9,9 @@ import { Category } from '../category';
 import { User } from './user';
 import { trigger,state,style,transition,animate,keyframes } from '@angular/animations';
 import { MdMenuTrigger } from '@angular/material'
+/// <reference types="aws-sdk" />
+declare var AWS: any;
+
 
 @Component({
   selector: 'app-user',
@@ -36,7 +39,7 @@ import { MdMenuTrigger } from '@angular/material'
       ]),
     transition(':leave', [
       style({transform: 'scale(1)'}),
-      animate('0', style({transform: 'scale(0)'}))
+      animate('0ms', style({transform: 'scale(0)'}))
       ])
     ]
     )]
@@ -51,10 +54,20 @@ export class UserComponent implements OnInit {
   private notifications: any[];
   private totalNotSeenNotifications: number = 0;
 
-  constructor(private categoryService: CategoryService, private userService: UserService, private auth: AuthService, private socketService: SocketIOService, private articleService: ArticleService) { }
+  constructor(private categoryService: CategoryService, private userService: UserService, private auth: AuthService, private socketService: SocketIOService, private articleService: ArticleService) {
+    let ec2 = new AWS.EC2();
+    console.log(ec2);
+  }
 
   ngOnInit() {
-    console.log(this.searchedArticles);
+    console.log('----------')
+    console.log(AWS)
+    let s3 = new AWS.S3({ params: {bucket: ''}});
+    let ec2 = new AWS.EC2();
+    console.log(s3);
+    console.log(ec2);
+
+
     this.socketService.initializeSocketInstance();
     this.socketService.listenToNotification().subscribe((notifications) => {
       this.notifications = notifications;

@@ -5,7 +5,8 @@ import { MdDialogRef, MdDialog, MdSnackBar } from '@angular/material';
 import { AuthService } from '../auth.service';
 import { MenuItem } from 'primeng/primeng';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component'
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import 'rxjs/add/operator/debounceTime';
 
 @Component({
   selector: 'app-articles-list',

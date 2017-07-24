@@ -10,10 +10,9 @@ import { MdDialogRef } from "@angular/material";
 import { ActivatedRoute } from '@angular/router';
 import { MdSnackBar } from '@angular/material';
 import { ImageCropperComponent, CropperSettings, CropperDrawSettings, Bounds } from 'ng2-img-cropper';
-import * as AWS from 'aws-sdk';
 import { AuthService } from "../../auth.service";
 
-require('dotenv').config()
+import * as AWS from 'aws-sdk';
 
 @Component({
   selector: 'app-article-editor',
@@ -90,10 +89,10 @@ export class ArticleEditorComponent implements OnInit {
   }
 
   onApplyCrop(article: any) {
+
     let accessKeyId = '';
     let secretAccessKey = '';
     this.articleService.getAWSKey().then(res => {
-      console.log(res)
       accessKeyId = res.aws_id;
       secretAccessKey = res.aws_secret;
 
@@ -102,11 +101,12 @@ export class ArticleEditorComponent implements OnInit {
         accessKeyId: accessKeyId,
         secretAccessKey: secretAccessKey
       }
-      let _id = (+new Date).toString().concat('_') + this.articleDetail.header_image_name;
 
-      let s3Bucket = new AWS.S3({
-        params: { Bucket: 'cuongngo-news', Key: _id, ACL: 'public-read' },
-      })
+      let _id = (+new Date).toString().concat('_') + this.articleDetail.header_image_name;
+      let params = { Bucket: 'cuongngo-news', Key: _id, ACL: 'public-read' }
+      console.log('create s3')
+      let s3Bucket = new AWS.S3({params: params})
+      console.log('successfully created s3')
 
       let buf = new Buffer(article.image.replace(/^data:image\/\w+;base64,/, ""), 'base64')
       let xdata: any = {
@@ -115,12 +115,17 @@ export class ArticleEditorComponent implements OnInit {
         ContentEncoding: 'base64',
         ContentType: 'image/jpeg'
       };
+      console.log(buf);
+      console.log(xdata);
+
       let self = this;
       s3Bucket.putObject(xdata, function (err, data) {
         if (err) {
+          console.log('err:' + err);
         } else {
           self.articleDetail.header_image = 'https://s3-ap-southeast-1.amazonaws.com/cuongngo-news/' + _id
           self.isLoading = false;
+          console.log(self.articleDetail)
         }
       });
     })
