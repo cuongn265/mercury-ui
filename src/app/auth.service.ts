@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { tokenNotExpired } from 'angular2-jwt';
 import { Router } from '@angular/router';
 import { SocketIOService } from "./socket.io/socket-io.service";
+import {ComponentInteractionService } from "./component-interaction.service"
 
 // Avoid name not found warnings
 declare var Auth0Lock: any;
@@ -48,7 +49,7 @@ export class AuthService {
   lock = new Auth0Lock('8VZeo0lbIPEz3OCGSVuC4AdWvKZBD0k9', 'cuongnm265.au.auth0.com', this.options);
   userProfile: User;
 
-  constructor(private router: Router, private socketService: SocketIOService) {
+  constructor(private router: Router, private socketService: SocketIOService, private sharedService: ComponentInteractionService) {
     this.userProfile = JSON.parse(localStorage.getItem('profile'));
     this.lock.on('authenticated', (authResult) => {
       localStorage.setItem('id_token', authResult.idToken);
@@ -62,6 +63,8 @@ export class AuthService {
         localStorage.setItem('profile', JSON.stringify(profile));
         this.userProfile = profile;
         let userId = this.userProfile.identities[0].user_id;
+
+        this.sharedService.setLogged(this.userProfile);
         /* Subscribe to notification event */
         this.socketService.subscribeUser(userId);
       });

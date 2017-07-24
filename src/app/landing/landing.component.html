@@ -37,7 +37,6 @@
   </swiper>
   <div class="latest-news-area">
     <md-tab-group md-stretch-tabs>
-      <
       <md-tab label="Recommended" *ngIf="auth.authenticated() && auth.userProfile">
         <div fxLayout='row wrap' *ngIf="recommendedArticles">
           <div fxFlex fxFlex="33%" fxFlex.sm="50%" fxFlex.xs="100%" style="padding: 20px;" *ngFor="let recommended of recommendedArticles">

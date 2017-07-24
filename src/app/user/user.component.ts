@@ -9,6 +9,7 @@ import { Category } from '../category';
 import { User } from './user';
 import { trigger,state,style,transition,animate,keyframes } from '@angular/animations';
 import { MdMenuTrigger } from '@angular/material'
+import {ComponentInteractionService } from "../component-interaction.service";
 /// <reference types="aws-sdk" />
 declare var AWS: any;
 
@@ -54,7 +55,7 @@ export class UserComponent implements OnInit {
   private notifications: any[];
   private totalNotSeenNotifications: number = 0;
 
-  constructor(private categoryService: CategoryService, private userService: UserService, private auth: AuthService, private socketService: SocketIOService, private articleService: ArticleService) {
+  constructor(private categoryService: CategoryService, private userService: UserService, private auth: AuthService, private socketService: SocketIOService, private articleService: ArticleService, private sharedService: ComponentInteractionService) {
     let ec2 = new AWS.EC2();
   }
 
@@ -80,6 +81,12 @@ export class UserComponent implements OnInit {
         this.socketService.subscribeUser(userId);
       }
     }
+
+    this.sharedService.getLogged().subscribe(
+      (Logged: any) => {
+        console.log(Logged);
+      }
+    )
   }
 
   checkProfile() {
