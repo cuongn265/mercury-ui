@@ -24,14 +24,14 @@
         <md-card-actions style="position: absolute; bottom: 24px; left: 0; right: 0; margin: auto;">
           <button md-button color="primary" [routerLink]="[article._id]" style="margin-left: 16px;">READ MORE</button>
           <button md-icon-button class="pull-right" shareButton="twitter" style="margin-right: 16px;"><md-icon>share</md-icon></button>
-          <button md-icon-button class="pull-right" (click)="toggleBookmark(article._id)"><md-icon>{{ isBookmark ? 'favorite' : 'favorite_border'}}</md-icon></button>
+          <button md-icon-button class="pull-right" (click)="toggleBookmark(article._id)"><md-icon>{{ idList.includes(article._id) ? 'favorite' : 'favorite_border' }}</md-icon></button>
         </md-card-actions>
       </md-card>
       <div class="clearfix visible-sm-block"></div>
     </div>
   </div>
   <!-- End here-->
-  <div fxLayout='row wrap' class="row-loading" *ngIf="!isFinish" [hidden]="!isLoading">
+  <div fxLayout='row wrap' class="row-loading" *ngIf="!isFinish">
     <div fxFlex fxFlex="33%" fxFlex.sm="50%" fxFlex.xs="100%" style="padding: 20px;">
       <md-card class="timeline-item">
         <div class="animated-background facebook">
