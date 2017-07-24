@@ -30,6 +30,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
   private sub: any;
   isBookmark: boolean = false;
   bookmarkedArticles: Article[] = [];
+  idList = [];
 
   constructor(private articleService: ArticleService, private route: ActivatedRoute, private userService: UserService, private authService: AuthService) {
   }
@@ -54,6 +55,13 @@ export class ArticleComponent implements OnInit, OnDestroy {
         }
       );
     });
+
+    if (this.authService.authenticated()) {
+      this.userService.getBookmarks(this.authService.userProfile.identities[0].user_id).then(res => {
+        this.bookmarkedArticles = res
+        this.bookmarkedArticles.map((article) => this.idList.push(article._id));
+      });
+    };
   }
 
   ngOnDestroy() {
@@ -88,17 +96,16 @@ export class ArticleComponent implements OnInit, OnDestroy {
     let userId = this.authService.userProfile.identities[0].user_id;
     this.userService.toggleBookmark(userId, articleId).then((res) => {
       if (res.status == 202) {
-        this.checkBookmarked(userId, articleId);
+        this.checkBookmarked(articleId, userId);
       }
     });
   }
 
-  checkBookmarked(userId: string, articleId: string) {
-    this.userService.getBookmarks(userId).then((res) => {
+  checkBookmarked(articleId: string, userId: string): Promise<any> {
+    return this.userService.getBookmarks(userId).then((res) => {
       this.bookmarkedArticles = res;
-      let idList = [];
-      this.bookmarkedArticles.map((article) => idList.push(article._id));
-      this.isBookmark = idList.includes(articleId) ? true : false;
+      this.idList = [];
+      this.bookmarkedArticles.map((article) => this.idList.push(article._id));
     })
   }
 }

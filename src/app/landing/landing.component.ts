@@ -6,6 +6,8 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { ArticleService } from "../article/article.service";
 import { UserService } from "../user/user.service";
 import { Article } from "../article/article";
+import 'rxjs/add/operator/toPromise';
+import {ComponentInteractionService } from "../component-interaction.service";
 
 @Component({
   selector: 'app-landing',
@@ -46,8 +48,11 @@ export class LandingComponent implements OnInit {
   recommendedArticles: Article[];
   bookmarkedArticles: Article[];
   defaultImage = 'assets/images/loading.gif';
+  idList = [];
 
-  constructor(private categoryService: CategoryService, private auth: AuthService, private articleServce: ArticleService, private userService: UserService) { }
+  constructor(private categoryService: CategoryService, private auth: AuthService,
+    private articleServce: ArticleService, private userService: UserService,
+    private sharedService: ComponentInteractionService) { }
 
   ngOnInit() {
     this.comingSoonCategoryLength = 0;
@@ -73,8 +78,23 @@ export class LandingComponent implements OnInit {
     );
     if (this.auth.authenticated()) {
       this.articleServce.getRecommendedArticles(this.auth.userProfile.identities[0].user_id).then(res => this.recommendedArticles = res);
-      this.userService.getBookmarks(this.auth.userProfile.identities[0].user_id).then(res => this.bookmarkedArticles = res);
-    };
+      this.userService.getBookmarks(this.auth.userProfile.identities[0].user_id).then(res => {
+        this.bookmarkedArticles = res
+        this.bookmarkedArticles.map((article) => this.idList.push(article._id));
+      });
+    }
+    this.sharedService.getLogged().subscribe(
+      (Logged: any) => {
+        console.log(Logged)
+        if (Logged != undefined) {
+          this.articleServce.getRecommendedArticles(Logged.identities[0].user_id).then(res => this.recommendedArticles = res);
+          this.userService.getBookmarks(Logged.identities[0].user_id).then(res => {
+            this.bookmarkedArticles = res
+            this.bookmarkedArticles.map((article) => this.idList.push(article._id));
+          });
+        }
+      }
+    )
   }
 
   checkProfile() {
@@ -108,6 +128,23 @@ export class LandingComponent implements OnInit {
       if (res.status == 202) {
         this.userService.getBookmarks(this.auth.userProfile.identities[0].user_id).then(res => this.bookmarkedArticles = res);
       }
+    })
+  }
+
+  toggleBookmark(articleId) {
+    let userId = this.auth.userProfile.identities[0].user_id;
+    this.userService.toggleBookmark(userId, articleId).then((res) => {
+      if (res.status == 202) {
+        this.checkBookmarked(articleId, userId)
+      }
+    });
+  }
+
+  checkBookmarked(articleId: string, userId: string): Promise<any> {
+    return this.userService.getBookmarks(userId).then((res) => {
+      this.bookmarkedArticles = res;
+      this.idList = [];
+      this.bookmarkedArticles.map((article) => this.idList.push(article._id));
     })
   }
 }

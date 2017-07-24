@@ -37,7 +37,6 @@
   </swiper>
   <div class="latest-news-area">
     <md-tab-group md-stretch-tabs>
-      <
       <md-tab label="Recommended" *ngIf="auth.authenticated() && auth.userProfile">
         <div fxLayout='row wrap' *ngIf="recommendedArticles">
           <div fxFlex fxFlex="33%" fxFlex.sm="50%" fxFlex.xs="100%" style="padding: 20px;" *ngFor="let recommended of recommendedArticles">
@@ -57,8 +56,8 @@
               </md-card-content>
               <md-card-actions style="position: absolute; bottom: 24px; left: 0; right: 0; margin: auto;">
                 <button md-button color="primary" [routerLink]="['/news', getCategoryName(recommended.category), recommended._id]" style="margin-left: 16px;">READ MORE</button>
-                <button md-icon-button class="pull-right" shareButton="twitter" style="margin-right: 16px;"><md-icon>share</md-icon></button>
-                <button md-icon-button class="pull-right"><md-icon>favorite_border</md-icon></button>
+                <button md-icon-button class="pull-right" shareButton="facebook" style="margin-right: 16px;"><md-icon>share</md-icon></button>
+                <button md-icon-button class="pull-right" (click)="toggleBookmark(recommended._id)"><md-icon>{{ idList.includes(recommended._id) ? 'favorite' : 'favorite_border' }}</md-icon></button>
               </md-card-actions>
             </md-card>
           </div>
@@ -84,7 +83,7 @@
               <md-card-actions style="position: absolute; bottom: 24px; left: 0; right: 0; margin: auto;">
                 <button md-button color="primary" [routerLink]="['/news', getCategoryName(bookmarked.category), bookmarked._id]" style="margin-left: 16px;">READ MORE</button>
                 <button md-icon-button class="pull-right" shareButton="twitter" style="margin-right: 16px;"><md-icon>share</md-icon></button>
-                <button md-icon-button class="pull-right" (click)="removeBookmark(bookmarked._id)"><md-icon>favorite_border</md-icon></button>
+                <button md-icon-button class="pull-right" (click)="removeBookmark(bookmarked._id)"><md-icon>favorite</md-icon></button>
               </md-card-actions>
             </md-card>
           </div>

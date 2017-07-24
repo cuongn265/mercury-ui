@@ -54,6 +54,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { TagsListComponent } from './tags-list/tags-list.component';
+import { ComponentInteractionService } from './component-interaction.service';
 
 @NgModule({
   declarations: [
@@ -110,7 +111,7 @@ import { TagsListComponent } from './tags-list/tags-list.component';
     InfiniteScrollModule,
     ImageCropperModule,
   ],
-  providers: [AuthGuard, AuthService, SocketIOService, LocalStorageService],
+  providers: [AuthGuard, AuthService, SocketIOService, LocalStorageService, ComponentInteractionService],
   bootstrap: [AppComponent],
   entryComponents: [
     ConfirmDialogComponent,
