@@ -24,7 +24,7 @@
         <md-card-actions style="position: absolute; bottom: 24px; left: 0; right: 0; margin: auto;">
           <button md-button color="primary" [routerLink]="[article._id]" style="margin-left: 16px;">READ MORE</button>
           <button md-icon-button class="pull-right" shareButton="twitter" style="margin-right: 16px;"><md-icon>share</md-icon></button>
-          <button md-icon-button class="pull-right" (click)="toggleBookmark(article._id)"><md-icon>{{ idList.includes(article._id) ? 'favorite' : 'favorite_border' }}</md-icon></button>
+          <button md-icon-button class="pull-right" *ngIf="authService.authenticated()" (click)="toggleBookmark(article._id)"><md-icon>{{ idList.includes(article._id) ? 'favorite' : 'favorite_border' }}</md-icon></button>
         </md-card-actions>
       </md-card>
       <div class="clearfix visible-sm-block"></div>

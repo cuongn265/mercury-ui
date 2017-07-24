@@ -10,6 +10,7 @@ import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 
 import { UserService } from "../../user/user.service";
 import { LocalStorageService } from "../../technical/local-storage.service";
+import {ComponentInteractionService } from "../../component-interaction.service";
 
 @Component({
   selector: 'app-comment',
@@ -48,10 +49,21 @@ export class CommentComponent implements OnInit {
     private route: ActivatedRoute,
     private dialog: MdDialog,
     private localStorageService: LocalStorageService,
-    private userService: UserService) { }
+    private userService: UserService,
+    private sharedService: ComponentInteractionService) { }
 
   ngOnInit() {
     let user_id = this.authService.authenticated() ? this.authService.userProfile.identities[0].user_id : '';
+    this.sharedService.getLogged().subscribe(
+      (Logged: any) => {
+        console.log(Logged)
+        if (Logged != undefined) {
+          this.userService.getUserProfileImage(Logged.identities[0].user_id).then((imgPath) => {
+            this.currentUserImagePath = imgPath;
+          });
+        }
+      }
+    )
     if (user_id) {
       this.userService.getUserProfileImage(user_id).then((imgPath) => {
         this.currentUserImagePath = imgPath;

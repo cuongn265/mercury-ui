@@ -77,7 +77,9 @@ export class ArticleDetailComponent implements OnInit {
     });
 
     this.shareUrl = window.location.href.toString();
-    this.checkBookmarked(userId);
+    if (this.authService.authenticated()) {
+      this.checkBookmarked(userId);
+    }
   }
 
   toggleBookmark() {
