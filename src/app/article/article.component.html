@@ -13,7 +13,7 @@
             <img [src]="article.author ? 'https://cdn.auth0.com/avatars/' + article.author[0].toLowerCase() + '.png' : 'https://cdn.auth0.com/avatars/m.png'" alt="avatar" style="width: 100%; border-radius: 50%;">
           </div>
           <md-card-title md-line>{{article.title}}</md-card-title>
-          <md-card-subtitle md-line>{{article.author || 'Mercury Crew'}}</md-card-subtitle>
+          <md-card-subtitle md-line>{{article.date | date:'medium' || 'Mercury Crew'}}</md-card-subtitle>
         </md-card-header>
         <img md-card-image [src]="article.header_image ? article.header_image : 'http://www.bluthemes.com/assets/img/blog/12/balloon.jpg'">
         <md-card-content style="margin-bottom: 50px;">

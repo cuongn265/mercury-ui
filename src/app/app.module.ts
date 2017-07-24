@@ -8,9 +8,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthService } from './auth.service';
 
 import { MaterialModule } from '@angular/material';
-import { CollapseDirective } from 'ng2-bootstrap';
 
-import { TagInputModule } from "ng2-tag-input";
+import { TagInputModule } from "ngx-chips";
 
 
 import { AppComponent } from './app.component';
@@ -40,7 +39,7 @@ import { ReversePipe } from './reverse.pipe';
 import { ArticleEditorComponent } from './articles-list/article-editor/article-editor.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
-import { ImageCropperComponent } from 'ng2-img-cropper';
+import { ImageCropperModule } from 'ng2-img-cropper';
 import { CommentComponent } from './article-detail/comment/comment.component';
 import { MentionModule } from 'angular2-mentions/mention';
 import { SwiperModule } from 'angular2-useful-swiper';
@@ -60,7 +59,6 @@ import { TagsListComponent } from './tags-list/tags-list.component';
   declarations: [
     AppComponent,
     ArticleComponent,
-    CollapseDirective,
     ArticleDetailComponent,
     AdminComponent,
     UserComponent,
@@ -73,7 +71,6 @@ import { TagsListComponent } from './tags-list/tags-list.component';
     ReversePipe,
     ArticleEditorComponent,
     ConfirmDialogComponent,
-    ImageCropperComponent,
     CommentComponent,
     SwiperComponent,
     LandingComponent,
@@ -86,7 +83,7 @@ import { TagsListComponent } from './tags-list/tags-list.component';
     FormsModule,
     HttpModule,
     MaterialModule,
-    RouterModule.forRoot(AppRoutes),
+    RouterModule.forRoot(AppRoutes, { useHash: true} ),
     ShareButtonsModule,
     DataTableModule,
     ButtonModule,
@@ -110,7 +107,8 @@ import { TagsListComponent } from './tags-list/tags-list.component';
     Ng2PageScrollModule.forRoot(),
     FlexLayoutModule,
     LazyLoadImageModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    ImageCropperModule,
   ],
   providers: [AuthGuard, AuthService, SocketIOService, LocalStorageService],
   bootstrap: [AppComponent],

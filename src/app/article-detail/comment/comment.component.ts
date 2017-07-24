@@ -32,7 +32,7 @@ export class CommentComponent implements OnInit {
 
   order = 'text';
   reverse = false;
-  isActive = 'best';
+  isActive = 'newest';
   commentLimit = 10;
 
   commentText: string = "";

@@ -1,5 +1,5 @@
 <md-grid-list cols="2" rowHeight="fit" class="landing">
-  <md-grid-tile *ngFor="let article of publishedArticles.reverse() | slice:0:4; let i = index">
+  <md-grid-tile *ngFor="let article of publishedArticles | slice:0:4; let i = index">
     <div class="swiper-slide header clickable" [ngStyle]="{'background-image': 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(' + article.header_image + ')'}"
       [routerLink]="[article._id]">
       <div [class]="'header header-' + i">

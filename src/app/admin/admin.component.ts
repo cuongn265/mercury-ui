@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { User } from './../user/user';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -12,7 +12,7 @@ export class AdminComponent implements OnInit {
 
   user: User;
 
-  constructor(private auth: AuthService, private router: Router) { }
+  constructor(private auth: AuthService, private router: Router, private _changeDetectionRef : ChangeDetectorRef) { }
 
   ngOnInit() {
   }
@@ -29,5 +29,9 @@ export class AdminComponent implements OnInit {
   logout() {
     this.auth.logout();
     this.router.navigate(['/']);
+  }
+
+  ngAfterViewInit(): void {
+    this._changeDetectionRef.detectChanges();
   }
 }

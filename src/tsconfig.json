@@ -3,15 +3,20 @@
     "declaration": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "lib": ["es6", "dom", "es2015.promise", "es2016"],
+    "lib": ["dom", "es2015.promise", "es2016"],
     "mapRoot": "./",
-    "module": "es6",
+    "module": "es2015",
     "moduleResolution": "node",
     "outDir": "../dist/out-tsc",
     "sourceMap": true,
     "target": "es5",
+    "types": ["node", "jasmine", "dotenv", "jquery"],
     "typeRoots": [
       "../node_modules/@types"
     ]
-  }
+  },
+  "exclude": [
+    "test.ts",
+    "**/*.spec.ts"
+  ]
 }
