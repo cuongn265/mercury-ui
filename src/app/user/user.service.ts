@@ -53,7 +53,11 @@ export class UserService {
 
     markAllNotificationAsSeen(userId: string) {
         let postUrl = this.apiUrl + 'notifications/users/' + userId + '/seenAll';
-        this.http.post(postUrl, {}).toPromise().then(response => response).catch(this.handleError);
+        let userToken = localStorage.getItem('id_token');
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        headers.append('Authorization', userToken);
+        let options = new RequestOptions({ headers: headers });
+        this.http.post(postUrl, {}, options).toPromise().then(response => response).catch(this.handleError);
     }
 
     markNotificationAsRead(userId: string, notificationId: string) {
