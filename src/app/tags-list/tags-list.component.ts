@@ -24,7 +24,7 @@ export class TagsListComponent implements OnInit {
   constructor(private tagService: TagService) { }
 
   ngOnInit() {
-    this.tagService.getTagsList().then(res => { this.tagsList = res; console.log(this.tagsList) });
+    this.tagService.getTagsList().then(res => { this.tagsList = res; });
   }
 
   showDialogToAdd() {
@@ -61,7 +61,7 @@ export class TagsListComponent implements OnInit {
       this.displayDialog = false;
       return true;
     };
-    
+
     let index = this.findSelectedTagIndex();
     this.tagService.deleteTag(this.tag._id).then(res => {
       this.tag = null;

@@ -104,9 +104,7 @@ export class ArticleEditorComponent implements OnInit {
 
       let _id = (+new Date).toString().concat('_') + this.articleDetail.header_image_name;
       let params = { Bucket: 'cuongngo-news', Key: _id, ACL: 'public-read' }
-      console.log('create s3')
       let s3Bucket = new AWS.S3({params: params})
-      console.log('successfully created s3')
 
       let buf = new Buffer(article.image.replace(/^data:image\/\w+;base64,/, ""), 'base64')
       let xdata: any = {
@@ -115,8 +113,6 @@ export class ArticleEditorComponent implements OnInit {
         ContentEncoding: 'base64',
         ContentType: 'image/jpeg'
       };
-      console.log(buf);
-      console.log(xdata);
 
       let self = this;
       s3Bucket.putObject(xdata, function (err, data) {
@@ -125,7 +121,6 @@ export class ArticleEditorComponent implements OnInit {
         } else {
           self.articleDetail.header_image = 'https://s3-ap-southeast-1.amazonaws.com/cuongngo-news/' + _id
           self.isLoading = false;
-          console.log(self.articleDetail)
         }
       });
     })
