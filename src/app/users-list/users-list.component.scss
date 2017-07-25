@@ -11,6 +11,9 @@
   // }
 }
 
+md-card-header {
+  overflow: hidden;
+}
 @media screen and (min-width: 801px) {
  footer {
     display: none;

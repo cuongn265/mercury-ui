@@ -81,12 +81,6 @@ export class UserComponent implements OnInit {
         this.socketService.subscribeUser(userId);
       }
     }
-
-    this.sharedService.getLogged().subscribe(
-      (Logged: any) => {
-        console.log(Logged);
-      }
-    )
   }
 
   checkProfile() {

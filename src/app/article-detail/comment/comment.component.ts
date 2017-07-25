@@ -56,7 +56,6 @@ export class CommentComponent implements OnInit {
     let user_id = this.authService.authenticated() ? this.authService.userProfile.identities[0].user_id : '';
     this.sharedService.getLogged().subscribe(
       (Logged: any) => {
-        console.log(Logged)
         if (Logged != undefined) {
           this.userService.getUserProfileImage(Logged.identities[0].user_id).then((imgPath) => {
             this.currentUserImagePath = imgPath;

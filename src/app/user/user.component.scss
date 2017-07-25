@@ -10,7 +10,7 @@
 }
 
 /deep/ .mat-input-ripple {
-  background-color: white !important; 
+  background-color: white !important;
 }
 
 /deep/ .mat-input-underline {
@@ -62,7 +62,7 @@
 }
 
 .md-sidenav {
-  width: 300px;
+  min-width: 300px;
   md-nav-list {
     md-list-item {
       a {

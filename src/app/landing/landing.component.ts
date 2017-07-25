@@ -85,7 +85,6 @@ export class LandingComponent implements OnInit {
     }
     this.sharedService.getLogged().subscribe(
       (Logged: any) => {
-        console.log(Logged)
         if (Logged != undefined) {
           this.articleServce.getRecommendedArticles(Logged.identities[0].user_id).then(res => this.recommendedArticles = res);
           this.userService.getBookmarks(Logged.identities[0].user_id).then(res => {

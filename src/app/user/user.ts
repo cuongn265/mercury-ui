@@ -8,6 +8,7 @@ export class User {
   public email: string;
   public role: string;
   public enabled: boolean;
+  public user_metadata: any;
   public identities: Array<{
     user_id: string,
     provider: string,
